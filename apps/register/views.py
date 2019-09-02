@@ -1,9 +1,8 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib import messages
-from .models import User
-from .models import Apply
+from .models import User , Student
+from .forms import UserForm , StudentForm
 import bcrypt
-from .forms import ApplForm
 
 
 def index(request):
@@ -63,17 +62,64 @@ def admincheck(request):
 			d=1
 		if d==1:
 			return render(request,'admindash.html')
-		else:
-			return render(request,'admin.html')
 
-def adminpage(request):
-
-        user = Apply.objects.create(first_name=request.POST.get['first_name'], last_name=request.POST.get['last_name'], email=request.POST.get['email'], phone=request.POST.get['phone'], city=request.POST.get['city'], state=request.POST.get['state'], zip=request.POST.get['zip'])
-        user.save()
-        request.session['id'] = user.id
-        return redirect('/homepage')
+	else:
+	    return render(request,'admin.html')
 
 def get(self , request):
         post = Post.objects.all()
         args = {'posts' : posts}
         return render(request ,self.template_name ,args)
+
+
+def register_stud(request):
+    # Set to False initially. Code changes value to True when registration succeeds.
+    registered = False
+
+    if request.method == 'POST':
+        user_form    = UserForm(request.POST)
+        student_form = StudentForm(request.POST, request.FILES)
+
+
+        if user_form.is_valid() and student_form.is_valid():
+            try:
+                user = user_form.save()
+                # user.username(label_tag='roll_no')
+                # using set_password method, hash the password
+                user.is_active = False
+                user.set_password(user.password)
+                user.save()
+
+                # Since we need to set the user attribute ourselves, we set commit=False.
+                # This delays saving the model until we're ready to avoid integrity problems.
+
+                student  = student_form.save(commit = False)
+                student.roll_no = user
+                student.save()
+                registered = True
+
+                return HttpResponseRedirect('/')
+            except:
+                pass
+
+    # Not a HTTP POST, so we render our form using two ModelForm instances.
+    # These forms will be blank, ready for user input.
+    else:
+        user_form = UserForm()
+        student_form = StudentForm()
+
+
+    return render(request,'register.html', {
+        'user_form' : user_form,
+        'student_form' : student_form,
+        'registered': registered,
+    })
+
+def show_students(request):
+    changer = []
+    student_list = Student.objects.all()
+    for i in student_list:
+        user = Student.objects.get(roll_no = i.roll_no)
+        changer.append([user, i])
+
+    return render(request, 'show_students.html', {'students': changer,})
