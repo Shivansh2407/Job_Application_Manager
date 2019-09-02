@@ -1,0 +1,30 @@
+<html>
+<head>
+    <title>Log Out</title>
+    <meta charset="utf-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'register/style.css' %}">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+          crossorigin="anonymous">
+</head>
+
+<body>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <div class="alert alert-success" role="alert'">
+                <h4 class="alert-heading">Success</h4>
+                <p><strong>{{user.first_name}} {{user.last_name}}</strong> , You Logged Out Succesfully</p>
+            </div>
+        </div>
+    </div>
+
+    <form action="register/index.html" id="abc">
+        <input type="submit" value="Login Here.." class="btn btn-primary">
+    </form>
+</div>
+</body>
+</html>

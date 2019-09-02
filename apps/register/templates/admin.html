@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Email Validation</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"> {% load static %}
+    <link rel="stylesheet" href="{% static 'register/style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+          crossorigin="anonymous">
+    <style>
+        #abc{
+            display:flex;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <div class="card">
+                <h4 class="card-header text-center">Login</h4>
+                <div class="card-block">
+                    <form action="/admin/check/" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label class="form-control" for="fname">Email</label>
+                            <input type="text" placeholder="username" name="userid" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control" for="lname">Password</label>
+                            <input type="password" placeholder="password" name="pswrd" class="form-control">                        </div>
+                        <div class="mx-auto text-center">
+                            <input type="submit" value="Login" class="btn btn-primary">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
